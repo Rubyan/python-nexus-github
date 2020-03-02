@@ -1,0 +1,45 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: python-nexus
+  labels:
+    app: python-nexus
+spec:
+  resources:
+    limits:
+      cpu: 1
+      memory: 4Gi
+    requests:
+      cpu: 100m
+      memory: 512Mi
+    output:
+      to:
+        kind: ImageStreamTag
+        name: python-nexus:latest
+#   output:
+#     pushSecret:
+#       name: nexus-docker
+#     to:
+#       kind: DockerImage
+#       name: "nexus-docker.apps.okd.alliander.com/python-nexus:latest"
+  source:
+    git:
+      ref: master
+      uri: https://git.alliander.com/abr/openshift/python-nexus.git
+    sourceSecret:
+      name: gitlab-python-nexus
+    type: Git
+  strategy:
+    dockerStrategy:
+      dockerfilePath: Dockerfile.openshift
+---
+
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  labels:
+    app: python-nexus
+  name: python-nexus
+spec:
+  lookupPolicy:
+    local: false
