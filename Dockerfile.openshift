@@ -7,8 +7,8 @@ WORKDIR /usr/src/app
 COPY requirements.txt ./
 # RUN pip install --no-cache-dir -r requirements.txt
 
-RUN pip install -r requirements.txt -i https://nexus.apps.okd.alliander.com/repository/pypi-proxy/simple --trusted-host https://nexus.apps.okd.alliander.com
-# RUN pip install -r requirements.txt -i http://sonatype-nexus-service.default.svc:8080/repository/pypi-proxy/simple --trusted-host sonatype-nexus-service.default.svc
+# RUN pip install -r requirements.txt -i https://nexus.apps.okd.alliander.com/repository/pypi-proxy/simple --trusted-host https://nexus.apps.okd.alliander.com
+RUN pip install -r requirements.txt
 
 COPY . .
 
