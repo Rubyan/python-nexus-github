@@ -1,0 +1,32 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: python-nexus-github
+  name: python-nexus-github
+spec:
+  replicas: 1
+  selector:
+    deploymentconfig: python-nexus-github
+  template:
+    metadata:
+      labels:
+        app: python-nexus-github
+        deploymentconfig: python-nexus-github
+    spec:
+      triggers:
+      - type: ConfigChange
+      - type: ImageChange
+      containers:
+      - image: image-registry.openshift-image-registry.svc:5000/ot-abr-dev/python-nexus-github
+        imagePullPolicy: Always
+        name: python-nexus-github
+        env:
+        - name: logLevel
+          value: DEBUG
+        ports:
+        - containerPort: 9090
+          protocol: TCP
+        resources:
+          limits:
+            memory: 1000Mi
