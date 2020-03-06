@@ -6,7 +6,7 @@ metadata:
   name: {appName}
   namespace: {namespace}
 spec:
-  host: {appName}-{namespace}.apps.okd.alliander.com
+  # host: {appName}-{namespace}.apps.okd.alliander.com
   port:
     targetPort: 8080-tcp
   tls:
