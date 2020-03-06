@@ -1,0 +1,35 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  labels:
+    app: python-nexus-github-pipeline
+  name: python-nexus-github-pipeline
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: python-nexus-github:latest
+  source:
+    git:
+      ref: master
+      uri: https://github.com/Rubyan/python-nexus-github
+    sourceSecret:
+      name: python-nexus-github
+    type: Git
+  strategy:
+    jenkinsPipelineStrategy:
+      jenkinsfilePath: Jenkinsfile
+    type: JenkinsPipeline
+
+
+---
+
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  labels:
+    app: python-nexus-github
+  name: python-nexus-github
+spec:
+  lookupPolicy:
+    local: false

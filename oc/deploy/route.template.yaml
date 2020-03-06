@@ -1,0 +1,18 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: {appName}
+  name: {appName}
+  namespace: {namespace}
+spec:
+  host: {appName}-{namespace}.apps.okd.alliander.com
+  port:
+    targetPort: 8080-tcp
+  tls:
+    termination: edge
+  to:
+    kind: Service
+    name: {appName}
+    weight: 100
+  wildcardPolicy: None
