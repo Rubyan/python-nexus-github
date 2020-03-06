@@ -14,7 +14,7 @@ spec:
       ref: master
       uri: https://github.com/Rubyan/python-nexus-github
     sourceSecret:
-      name: python-nexus-github
+      name: gitlab-python-nexus
     type: Git
   strategy:
     jenkinsPipelineStrategy:
