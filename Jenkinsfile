@@ -16,7 +16,7 @@ buildParameterMap['buildStrategy'] =
     '*':[
       'checkout',
       //'build',
-      //'sonar',
+      'sonar',
       //'sonarQualityGate',
       //'dependencyCheck',
       'containerize',
