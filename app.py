@@ -23,11 +23,19 @@ from flask import Flask, jsonify
 from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv(filename='environment'))
 
-log = logging.getLogger(__name__)
+logging.basicConfig(format='%(asctime)s.%(msecs)03d - %(levelname)s - %(message)s',
+                    level=logging.DEBUG,
+                    datefmt='%Y-%m-%dT%H:%M:%S')
+
+logging.debug('This message should appear on the console')
+logging.info('So should this')
+logging.warning('And this, too')
+
 app = Flask(__name__)
 
 @app.route('/')
 def index():
+    logging.info('Index was called')
     return jsonify({
         'host_name': HOST_NAME,
         'app_name': APP_NAME,
@@ -38,8 +46,13 @@ def index():
         'host': socket.gethostname()
     })
 
+@app.route('/test123')
+def test123():
+    logging.info('test123 was called')
+    return "test123"
+
 if __name__ == '__main__':
-    VERSION = "0.1.0"
+    VERSION = "0.2.0"
 
     app.secret_key = 'super secret key'
 
@@ -49,4 +62,8 @@ if __name__ == '__main__':
     PORT = int(os.environ.get('OPENSHIFT_PYTHON_PORT', 8080))
     HOME_DIR = os.environ.get('OPENSHIFT_HOMEDIR', os.getcwd())
 
+    APPLICATION_NAME = os.environ.get('APPLICATION_NAME')
+    APPLICATION_VERSION = os.environ.get('APPLICATION_VERSION')
+
+    logging.info(f"{APPLICATION_NAME} with version {APPLICATION_VERSION} started, listening on port {PORT}")
     app.run(host='0.0.0.0', port=PORT)

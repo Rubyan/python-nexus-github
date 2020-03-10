@@ -18,4 +18,7 @@ COPY . .
 
 EXPOSE 8080 9090
 
+ENV APPLICATION_NAME        python-nexus-github
+ENV APPLICATION_VERSION     1.0.0
+
 CMD ["python","./app.py"]
